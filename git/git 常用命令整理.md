@@ -4,21 +4,17 @@
 
 ### 远程仓库相关
 
-      ```xml
-//将本地仓库和远程仓库做关联
-git remote add origin url
-
-//将远程仓库clone到本地
-git clone url
-
-//获取本地仓库关联的url
-git remote get-url origin 
-
-//设置本地仓库关联远程仓库的url
-git remote set-url origin url
-
-      ```
-
+     //将本地仓库和远程仓库做关联
+    git remote add origin url
+    
+    //将远程仓库clone到本地
+    git clone url
+    
+    //获取本地仓库关联的url
+    git remote get-url origin 
+    
+    //设置本地仓库关联远程仓库的url
+    git remote set-url origin url
 ### git 常用命令
 
 ```
@@ -131,16 +127,15 @@ revert后git 的提交记录变成
 
 ### git rebase
 
-      ```
-git checkout master
-git pull
-git checkout dev
-git rebase -i HEAD~2  //合并提交 --- 2表示合并两个
-git rebase master---->解决冲突--->git rebase --continue
-git checkout master
-git merge dev
-git push
-      ```
+    git checkout master
+    git pull
+    git checkout dev
+    git rebase -i HEAD~2  //合并提交 --- 2表示合并两个
+    git rebase master---->解决冲突--->git rebase --continue
+    git checkout master
+    git merge dev
+    git push
+
 
 >  git rebase 和git master 都可以用来合并一个分支到另外一个分支，不同点是，通过rebase 合并后的分支比较干净，是一条直线。通过merge 合并的分支会有很多支线分支
 
@@ -154,13 +149,60 @@ git rebase 合并分支图：
 
 ### git stash
 
-​     
+​     git stash 作用的将工作区的修改暂存起来，不add 也不commit。
 
+​    使用场景： 从master 分支 切出一个分支 test1 ，并在test1上开发任务。 此时需要在master分支做一些改动，比如bugfix。 但是test1分支的功能还没开发完成，如果commit的话，相当于是commit了一个非完整功能。可以使用git stash，将test1分支的代码暂存。然后checkout 到master 做master 分支修改。
 
+     ```
+//将工作区的修改暂存
+git stash save "save message"  :
+//查看当前所有的暂存
+git stash list 
+// 将暂存的内容恢复到工作去，并删除对应的stash，默认弹出第一个git stash pop stash@{$num}
+git stash pop 
+//丢弃stash@{$num}存储，从列表中删除这个存储
+git stash drop stash@{$num} ：丢弃stash@{$num}存储，从列表中删除这个存储
+//清空暂存区
+git stash clear 
+     ```
 
-
+ 
 
 ### 日常工作流程
+
+假定 主分支 master 开发分支 test
+
+ ```
+//将远程仓库代码clone到本地
+git clone remoteurl
+
+//创建功能开发分支
+git checkout -b test
+
+//提交分支代码
+git add .
+git commit -m "msg"
+
+//切换到master分支
+git checkout master
+//拉取远程分支代码
+git pull origin master
+
+//切换到test分支
+git checkout test;
+
+//将master最新的改动合并到test，有冲突解决冲突
+git merge master
+
+//切换到master分支
+git checkout master
+
+//合并test分支代码
+git merge test
+
+//推送到远程
+git push origin master
+ ```
 
 
 
